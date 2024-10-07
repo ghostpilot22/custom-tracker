@@ -22,7 +22,7 @@ public class DollBase
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer dollBaseId;
 	
-	@OneToMany(mappedBy = "doll_base", cascade = CascadeType.PERSIST, orphanRemoval = false)
+	@OneToMany(mappedBy = "dollBase", cascade = CascadeType.PERSIST, orphanRemoval = false)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Set<Custom> customs = new HashSet<>();

@@ -12,15 +12,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+// Called character's' so that it doesn't conflict with the object type.
 @Entity
 @Data
-public class Character 
+public class Characters
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "character_id")
 	private Integer characterId;
 	
-	@OneToOne(mappedBy = "character_id")
+	@OneToOne(mappedBy = "character")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Custom custom;

@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -31,8 +32,13 @@ public class Supplies
 	@Column
 	private Float price;
 	
-	@ManyToMany(mappedBy = "supplies", cascade = CascadeType.PERSIST)
+	/*@ManyToMany(mappedBy = "supplies", cascade = CascadeType.PERSIST)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private Set<Custom> customs = new HashSet<>();
+	private Set<Custom> customs = new HashSet<>();*/
+	
+	@OneToMany(mappedBy = "supplies", cascade = CascadeType.ALL, orphanRemoval = true)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private Set<CustomSupplies> customs = new HashSet<>();
 }

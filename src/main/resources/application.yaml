@@ -1,0 +1,10 @@
+spring:
+   datasource:
+      username: custom_tracker
+      password: custom_tracker
+      url: jdbc:mysql://localhost:3306/custom_tracker
+
+   jpa:
+      hibernate:
+         ddl-auto: create
+      show-sql: true

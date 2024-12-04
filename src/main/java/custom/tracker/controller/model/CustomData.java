@@ -83,12 +83,14 @@ public class CustomData
 		public SuppliesData(CustomSupplies cs, Supplies supply)
 		{
 			supplyId = supply.getSupplyId();
+			customSuppliesId = cs.getCustomSuppliesId();
 			supplyName = supply.getSupplyName();
 			quantityOwned = supply.getQuantityOwned();
 			price = supply.getPrice();
 			quantityNeeded = cs.getQuantityNeeded();
 		}
 		private Integer supplyId;
+		private Integer customSuppliesId;
 		private String supplyName;
 		private Integer quantityOwned;
 		private Float price;

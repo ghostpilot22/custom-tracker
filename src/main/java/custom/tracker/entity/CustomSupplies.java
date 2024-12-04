@@ -6,6 +6,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
@@ -16,6 +19,10 @@ import lombok.ToString;
 @Data
 public class CustomSupplies 
 {
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer customSuppliesId;
+	
 	@EmbeddedId
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "custom_id")

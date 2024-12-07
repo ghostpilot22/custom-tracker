@@ -23,14 +23,14 @@ public class CustomSupplies
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customSuppliesId;
 	
-	@EmbeddedId
+	//@EmbeddedId
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "custom_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Custom custom;
 	
-	@EmbeddedId
+	//@EmbeddedId
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "supply_id")
 	@EqualsAndHashCode.Exclude

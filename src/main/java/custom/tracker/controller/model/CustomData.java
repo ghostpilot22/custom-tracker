@@ -27,10 +27,16 @@ public class CustomData
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private CharacterData characters;
-	
+
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private Set<SuppliesData> supplies;
+	private Set<CustomSuppliesData> customSupplies;
+	
+	//@EqualsAndHashCode.Exclude
+	//@ToString.Exclude
+	//private Set<SuppliesData> supplies;
+	// Thinking of having data objects for supplies and doll base be their
+	// own separate classes, since they're not inherently linked to a custom
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -43,7 +49,7 @@ public class CustomData
 		dollBase = new DollBaseData(custom.getDollBase());
 		characters = new CharacterData(custom.getCharacter());
 		
-		supplies = new HashSet<SuppliesData>();
+		customSupplies = new HashSet<CustomSuppliesData>();
 		steps = new HashSet<StepData>();
 
 		// not sure if this is the right way to do this
@@ -51,7 +57,7 @@ public class CustomData
 		if(custom.getSupplies() != null) 
 		{
 			for(CustomSupplies cs : custom.getSupplies())
-				supplies.add(new SuppliesData(cs, cs.getSupplies()));
+				customSupplies.add(new CustomSuppliesData(cs, cs.getSupplies(), custom));
 		}
 		
 		if(custom.getSteps() != null)
@@ -78,22 +84,29 @@ public class CustomData
 	}
 	
 	@Data @NoArgsConstructor
-	public static class SuppliesData
+	public static class CustomSuppliesData
 	{
-		public SuppliesData(CustomSupplies cs, Supplies supply)
+		public CustomSuppliesData(CustomSupplies cs, Supplies supply, Custom custom)
 		{
 			supplyId = supply.getSupplyId();
+			customId = custom.getCustomId();
 			customSuppliesId = cs.getCustomSuppliesId();
-			supplyName = supply.getSupplyName();
-			quantityOwned = supply.getQuantityOwned();
-			price = supply.getPrice();
+			//price = supply.getPrice();
+			quantityNeeded = cs.getQuantityNeeded();
+		}
+		public CustomSuppliesData(CustomSupplies cs)
+		{
+			supplyId = cs.getSupplies().getSupplyId();
+			customId = cs.getCustom().getCustomId();
+			customSuppliesId = cs.getCustomSuppliesId();
 			quantityNeeded = cs.getQuantityNeeded();
 		}
 		private Integer supplyId;
+		private Integer customId;
 		private Integer customSuppliesId;
-		private String supplyName;
-		private Integer quantityOwned;
-		private Float price;
+		//private String supplyName;
+		//private Integer quantityOwned;
+		//private Float price;
 		private Integer quantityNeeded;
 	}
 	

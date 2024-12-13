@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import custom.tracker.controller.model.CustomData;
 import custom.tracker.controller.model.CustomData.CustomSuppliesData;
 import custom.tracker.controller.model.CustomData.StepData;
+import custom.tracker.controller.model.SuppliesData;
 import custom.tracker.dao.CharactersDao;
 import custom.tracker.dao.CustomDao;
 import custom.tracker.dao.CustomSuppliesDao;
@@ -45,6 +46,8 @@ public class CustomTrackerService
 	
 	@Autowired
 	private SuppliesDao suppliesDao;
+	
+	//------------------custom------------------------
 	
 	@Transactional (readOnly = false)
 	public CustomData saveCustom(CustomData customData) 
@@ -88,6 +91,38 @@ public class CustomTrackerService
 				.orElseThrow();
 	}
 
+	
+	@Transactional(readOnly = true)
+	public List<CustomData> retrieveAllCustoms() 
+	{
+		List<Custom> customs = customDao.findAll();
+		List<CustomData> result = new LinkedList<>();
+		
+		for (Custom custom : customs)
+		{
+			CustomData customData = new CustomData(custom);
+			if(customData.getSteps() != null) customData.getSteps().clear();
+			if(customData.getCustomSupplies() != null) customData.getCustomSupplies().clear();
+			result.add(customData);
+		}
+		
+		return result;
+	}
+
+	@Transactional(readOnly = true)
+	public CustomData retrieveCustom(Integer customId) 
+	{
+		return new CustomData(findCustomById(customId));
+	}
+
+	public void deleteCustomById(Integer customId) 
+	{
+		Custom custom = findCustomById(customId);
+		customDao.delete(custom);
+	}
+	
+	//--------------step------------------------
+	
 	@Transactional(readOnly = false)
 	public StepData saveStep (Integer customId, 
 			StepData stepData)
@@ -135,7 +170,7 @@ public class CustomTrackerService
 		// Add remaining fields
 	}
 	
-	
+	//--------------------customsupplies-----------------------------------
 	@Transactional(readOnly = false)
 	public CustomSuppliesData saveCustomSupplies (//Integer customsuppliesId, 
 			CustomSuppliesData customSuppliesData)
@@ -193,33 +228,15 @@ public class CustomTrackerService
 		return supply;
 	}
 
-	@Transactional(readOnly = true)
-	public List<CustomData> retrieveAllCustoms() 
-	{
-		List<Custom> customs = customDao.findAll();
-		List<CustomData> result = new LinkedList<>();
-		
-		for (Custom custom : customs)
-		{
-			CustomData customData = new CustomData(custom);
-			if(customData.getSteps() != null) customData.getSteps().clear();
-			if(customData.getCustomSupplies() != null) customData.getCustomSupplies().clear();
-			result.add(customData);
-		}
-		
-		return result;
-	}
+	//------------------supplies----------------------
 
-	@Transactional(readOnly = true)
-	public CustomData retrieveCustom(Integer customId) 
-	{
-		return new CustomData(findCustomById(customId));
+	public SuppliesData saveSupplies(SuppliesData suppliesData) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	public void deleteCustomById(Integer customId) 
-	{
-		Custom custom = findCustomById(customId);
-		customDao.delete(custom);
-	}
+	
+	//------------------character-----------------------
+	
+	//------------------dollbase-------------------------
 
 }

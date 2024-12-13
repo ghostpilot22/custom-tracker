@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import custom.tracker.controller.model.CustomData;
 import custom.tracker.controller.model.CustomData.CustomSuppliesData;
 import custom.tracker.controller.model.CustomData.StepData;
+import custom.tracker.controller.model.SuppliesData;
 import custom.tracker.service.CustomTrackerService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,7 @@ public class CustomTrackerController
 	@Autowired
 	private CustomTrackerService customTrackerService;
 	
+	//-------------- custom ------------------
 	// Creates a new custom
 	@PostMapping("/custom")
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -48,29 +50,6 @@ public class CustomTrackerController
 		customData.setCustomId(id);
 		log.info("Updating custom {}", customData);
 		return customTrackerService.saveCustom(customData);
-	}
-	
-	// Creates a step for a custom
-	@PostMapping("/custom/{customId}/step")
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public StepData addStepData(
-			@PathVariable Integer customId,
-			@RequestBody StepData stepData)
-	{
-		return customTrackerService.saveStep(customId, stepData);
-	}
-	
-	// Need a post and put for supplies also. And a put for this one
-	// Creates a customsupplies. This is only linked one-way to the 
-	// custom and the supplies, so to retrieve these you search by
-	// supplies id or custom id.
-	@PostMapping("/custom_supplies")
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public CustomSuppliesData addCustomSuppliesData(
-			//@PathVariable Integer customSuppliesId,
-			@RequestBody CustomSuppliesData customSuppliesData)
-	{
-		return customTrackerService.saveCustomSupplies(customSuppliesData);
 	}
 	
 	// Returns a list of all customs.
@@ -97,4 +76,50 @@ public class CustomTrackerController
 		customTrackerService.deleteCustomById(customId);
 		return Map.of("message", "Deletion successful");
 	}
+	
+	// --------------- step -----------------
+	// Creates a step for a custom
+	@PostMapping("/custom/{customId}/step")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public StepData addStepData(
+			@PathVariable Integer customId,
+			@RequestBody StepData stepData)
+	{
+		return customTrackerService.saveStep(customId, stepData);
+	}
+	
+	//--------------------customsupplies--------------
+	// Need a post and put for supplies also. And a put for this one
+	// Creates a customsupplies. This is only linked one-way to the 
+	// custom and the supplies, so to retrieve these you search by
+	// supplies id or custom id.
+	@PostMapping("/custom_supplies")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public CustomSuppliesData addCustomSuppliesData(
+			//@PathVariable Integer customSuppliesId,
+			@RequestBody CustomSuppliesData customSuppliesData)
+	{
+		return customTrackerService.saveCustomSupplies(customSuppliesData);
+	}
+	
+	
+	//----------------supplies--------------------
+
+	// Creates a new supplies
+	@PostMapping("/supplies")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public SuppliesData saveSupplies (
+			@RequestBody SuppliesData suppliesData)
+	{
+		log.info("Creating supplies {}", suppliesData);
+		return customTrackerService.saveSupplies(suppliesData);
+	}
+	
+	//----------------character-------------------
+	
+	
+	//----------------dollBase--------------------
+	
+	
+	
 }

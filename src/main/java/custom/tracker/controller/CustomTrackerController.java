@@ -19,6 +19,8 @@ import custom.tracker.controller.model.CustomData;
 import custom.tracker.controller.model.CustomData.CustomSuppliesData;
 import custom.tracker.controller.model.CustomData.StepData;
 import custom.tracker.controller.model.SuppliesData;
+import custom.tracker.controller.model.CharacterData;
+import custom.tracker.controller.model.DollBaseData;
 import custom.tracker.service.CustomTrackerService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -117,9 +119,27 @@ public class CustomTrackerController
 	
 	//----------------character-------------------
 	
+	// Creates a new character
+	@PostMapping("/character")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public CharacterData saveCharacter (
+			@RequestBody CharacterData characterData)
+	{
+		log.info("Creating character {}", characterData);
+		return customTrackerService.saveCharacter(characterData);
+	}
 	
 	//----------------dollBase--------------------
 	
-	
+
+	// Creates a new doll base
+	@PostMapping("/doll_base")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public DollBaseData saveDollBase (
+			@RequestBody DollBaseData dollBaseData)
+	{
+		log.info("Creating doll base {}", dollBaseData);
+		return customTrackerService.saveDollBase(dollBaseData);
+	}
 	
 }

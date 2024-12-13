@@ -12,6 +12,7 @@ public class CharacterData
 		characterId = charactr.getCharacterId();
 		name = charactr.getName();
 		hairColor = charactr.getHairColor();
+		hairColor = charactr.getSkinTone();
 		eyeColor = charactr.getEyeColor();
 		gender = charactr.getGender();
 		traits = charactr.getTraits();
@@ -20,6 +21,7 @@ public class CharacterData
 	private Integer characterId;
 	private String name;
 	private String hairColor;
+	private String skinTone;
 	private String eyeColor;
 	private String gender;
 	private String traits;

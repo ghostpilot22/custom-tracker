@@ -32,6 +32,9 @@ public class Characters
 
 	@Column
 	private String hairColor;
+	
+	@Column
+	private String skinTone;
 
 	@Column
 	private String eyeColor;

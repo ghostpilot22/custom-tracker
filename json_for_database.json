@@ -1,0 +1,29 @@
+custom
+{
+  "dollBaseId": 1,
+  "characterId": 1,
+  "customName": "nevada"
+}
+
+character
+{
+	"name": "Nevada",
+	"hairColor": "orange",
+	"skinTone": "steel",
+	"eyeColor": "steel?",
+	"gender": "ship",
+	"traits": "barnacles",
+	"personality": "cheerful and playful, capable of great violence but has moral code"
+}
+
+dollbase
+{
+	"dollName": "Gan Qing",
+	"dollSet": "Ten Thousand Escape Plans",
+	"brand": "JIDONGSHUNXI",
+	"size": "tall",
+	"jointType": "BJD",
+	"eyeType": "either",
+	"features": "",
+	"quantityOwned": 1
+}

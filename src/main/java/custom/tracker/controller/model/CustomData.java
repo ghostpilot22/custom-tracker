@@ -19,24 +19,21 @@ public class CustomData
 {
 	private Integer customId;
 	private String customName;
-	
+	private Integer dollBaseId;
+	private Integer characterId;
+	/*
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private DollBaseData dollBase;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private CharacterData characters;
+	private CharacterData characters; */
 
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Set<CustomSuppliesData> customSupplies;
 	
-	//@EqualsAndHashCode.Exclude
-	//@ToString.Exclude
-	//private Set<SuppliesData> supplies;
-	// Thinking of having data objects for supplies and doll base be their
-	// own separate classes, since they're not inherently linked to a custom
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -46,8 +43,10 @@ public class CustomData
 	{
 		customId = custom.getCustomId();
 		customName = custom.getCustomName();
-		dollBase = new DollBaseData(custom.getDollBase());
-		characters = new CharacterData(custom.getCharacter());
+		dollBaseId = custom.getDollBase().getDollBaseId();
+		characterId = custom.getCharacter().getCharacterId();
+		//dollBase = new DollBaseData(custom.getDollBase());
+		//characters = new CharacterData(custom.getCharacter());
 		
 		customSupplies = new HashSet<CustomSuppliesData>();
 		steps = new HashSet<StepData>();

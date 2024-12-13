@@ -13,14 +13,18 @@ import custom.tracker.controller.model.CustomData;
 import custom.tracker.controller.model.CustomData.CustomSuppliesData;
 import custom.tracker.controller.model.CustomData.StepData;
 import custom.tracker.controller.model.SuppliesData;
+import custom.tracker.controller.model.CharacterData;
+import custom.tracker.controller.model.DollBaseData;
 import custom.tracker.dao.CharactersDao;
 import custom.tracker.dao.CustomDao;
 import custom.tracker.dao.CustomSuppliesDao;
 import custom.tracker.dao.DollBaseDao;
 import custom.tracker.dao.StepDao;
 import custom.tracker.dao.SuppliesDao;
+import custom.tracker.entity.Characters;
 import custom.tracker.entity.Custom;
 import custom.tracker.entity.CustomSupplies;
+import custom.tracker.entity.DollBase;
 import custom.tracker.entity.Step;
 import custom.tracker.entity.Supplies;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +63,11 @@ public class CustomTrackerService
 		log.info("Found or created custom...");
 		copyCustomFields(custom, customData);
 		log.info("Custom fields copied...");
+		custom.setDollBase(findDollBaseById(customData.getDollBaseId()));
+				//findDollBaseById(customData.getDollBase().getDollBaseId()));
+		custom.setCharacter(findCharacterById(customData.getCharacterId()));
+				//findCharacterById(customData.getCharacters().getCharacterId()));
+		log.info("Linked data set...");
 		return new CustomData(customDao.save(custom));
 	}
 
@@ -185,7 +194,10 @@ public class CustomTrackerService
 
 	private void copyCustomSuppliesFields(CustomSupplies customSupplies, CustomSuppliesData customSuppliesData) 
 	{
-		// TODO Auto-generated method stub
+		customSupplies.setCustom(findCustomById(customSuppliesData.
+				getCustomId()));
+		customSupplies.setSupplies(findSuppliesById(customSuppliesData.
+				getSupplyId()));
 		
 	}
 
@@ -221,22 +233,145 @@ public class CustomTrackerService
 		return customSupplies;
 	}
 
-	private Supplies findSuppliesById(Integer supplyId) 
+
+	//------------------supplies----------------------
+
+	@Transactional(readOnly = false)
+	public SuppliesData saveSupplies (SuppliesData supplyData)
+	{
+		Supplies supply = findOrCreateSupplies(
+				supplyData.getSupplyId());
+		copySuppliesFields(supply, supplyData);
+		return new SuppliesData(suppliesDao.save(supply));
+	}
+	
+	private Supplies findOrCreateSupplies(Integer supplyId) 
+	{
+		Supplies supply;
+		if(Objects.isNull(supplyId))
+		{
+			log.info("Supply id null, creating new supply...");
+			supply = new Supplies();
+		}
+		else
+		{
+			log.info("Supply id not null, finding supply by id...");
+			supply = findSuppliesById(supplyId);
+		}
+		return supply;
+	}
+	
+	private Supplies findSuppliesById(Integer supplyId)
 	{
 		Supplies supply = suppliesDao.findById(supplyId)
 				.orElseThrow();
 		return supply;
 	}
-
-	//------------------supplies----------------------
-
-	public SuppliesData saveSupplies(SuppliesData suppliesData) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private void copySuppliesFields(Supplies supply, 
+			SuppliesData supplyData)
+	{
+		supply.setSupplyId(supplyData.getSupplyId());
+		supply.setSupplyName(supplyData.getSupplyName());
+		supply.setQuantityOwned(supplyData.getQuantityOwned());
+		supply.setPrice(supplyData.getPrice());
 	}
+
 	
 	//------------------character-----------------------
+
+@Transactional(readOnly = false)
+	public CharacterData saveCharacter (CharacterData characterData)
+	{
+		Characters charactr = findOrCreateCharacter(
+				characterData.getCharacterId());
+		copyCharacterFields(charactr, characterData);
+		return new CharacterData(charactersDao.save(charactr));
+	}
+	
+	private Characters findOrCreateCharacter(Integer characterId) 
+	{
+		Characters charactr;
+		if(Objects.isNull(characterId))
+		{
+			log.info("Character id null, creating new character...");
+			charactr = new Characters();
+		}
+		else
+		{
+			log.info("Character id not null, finding character by id...");
+			charactr = findCharacterById(characterId);
+		}
+		return charactr;
+	}
+	
+	private Characters findCharacterById(Integer characterId)
+	{
+		Characters charactr = charactersDao.findById(characterId)
+				.orElseThrow();
+		return charactr;
+	}
+	
+	private void copyCharacterFields(Characters charactr, 
+			CharacterData characterData)
+	{
+		charactr.setCharacterId(characterData.getCharacterId());
+		charactr.setName(characterData.getName());
+		charactr.setHairColor(characterData.getHairColor());
+		charactr.setSkinTone(characterData.getSkinTone());
+		charactr.setEyeColor(characterData.getEyeColor());
+		charactr.setGender(characterData.getGender());
+		charactr.setTraits(characterData.getTraits());
+		charactr.setPersonality(characterData.getPersonality());
+	}
+
 	
 	//------------------dollbase-------------------------
 
+
+	@Transactional(readOnly = false)
+	public DollBaseData saveDollBase (DollBaseData dollBaseData)
+	{
+		DollBase dollBase = findOrCreateDollBase(
+				dollBaseData.getDollBaseId());
+		copyDollBaseFields(dollBase, dollBaseData);
+		return new DollBaseData(dollBaseDao.save(dollBase));
+	}
+	
+	private DollBase findOrCreateDollBase(Integer dollBaseId) 
+	{
+		DollBase dollBase;
+		if(Objects.isNull(dollBaseId))
+		{
+			log.info("DollBase id null, creating new dollBase...");
+			dollBase = new DollBase();
+		}
+		else
+		{
+			log.info("DollBase id not null, finding dollBase by id...");
+			dollBase = findDollBaseById(dollBaseId);
+		}
+		return dollBase;
+	}
+	
+	private DollBase findDollBaseById(Integer dollBaseId)
+	{
+		DollBase dollBase = dollBaseDao.findById(dollBaseId)
+				.orElseThrow();
+		return dollBase;
+	}
+	
+	private void copyDollBaseFields(DollBase dollBase, 
+			DollBaseData dollBaseData)
+	{
+		dollBase.setDollBaseId(dollBaseData.getDollBaseId());
+		dollBase.setDollName(dollBaseData.getDollName());
+		dollBase.setDollSet(dollBaseData.getDollSet());
+		dollBase.setBrand(dollBaseData.getBrand());
+		dollBase.setSize(dollBaseData.getSize());
+		dollBase.setJointType(dollBaseData.getJointType());
+		dollBase.setEyeType(dollBaseData.getEyeType());
+		dollBase.setFeatures(dollBaseData.getFeatures());
+		dollBase.setQuantityOwned(dollBaseData.getQuantityOwned());
+	}
 }

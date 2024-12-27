@@ -75,7 +75,6 @@ public class CustomTrackerService
 	{
 		custom.setCustomId(customData.getCustomId());
 		custom.setCustomName(customData.getCustomName());
-		// Add remaining fields
 	}
 	
 	private Custom findOrCreateCustom(Integer customId) 
@@ -130,6 +129,44 @@ public class CustomTrackerService
 		customDao.delete(custom);
 	}
 	
+
+	public Float getProgressForACustom(Integer customId) 
+	{
+		float totalsteps = 0;
+		float completeds = 0;
+		List<StepData> steps = getAllStepsForACustom(customId);
+		for(StepData step : steps)
+		{
+			totalsteps++;
+			if(step.getCompleted()) completeds++;
+		}
+		return (completeds/totalsteps); // Would be nice if these could return formatted as percentages.
+	}
+
+	public Float getPrepForACustom(Integer customId) 
+	{
+		float totalitems = 0;
+		float owneditems = 0;
+		List<CustomSuppliesData> csds = getAllSuppliesForACustom(customId);
+		Supplies s = new Supplies();
+		for(CustomSuppliesData csd : csds)
+		{
+			totalitems++;
+			s = findSuppliesById(csd.getSupplyId());
+			if(csd.getQuantityNeeded() <= s.getQuantityOwned())
+			{
+				owneditems++;
+			}
+		}
+		totalitems++; // doll base counts too
+		Custom custom = customDao.findById(customId).orElseThrow();
+		DollBase base = custom.getDollBase();
+		if(base.getQuantityOwned() > 0) owneditems++;
+		return (owneditems/totalitems);// Would be nice if these could return formatted as percentages.
+	}
+
+	
+	
 	//--------------step------------------------
 	
 	@Transactional(readOnly = false)
@@ -157,18 +194,18 @@ public class CustomTrackerService
 		else
 		{
 			log.info("Step id not null, finding step by id...");
-			step = findStepById(customId, stepId);
+			step = findStepById(stepId);//customId, stepId);
 		}
 		return step;
 	}
 	
-	private Step findStepById(Integer customId,
+	private Step findStepById(//Integer customId,
 			Integer stepId)
 	{
 		Step step = stepDao.findById(stepId)
 				.orElseThrow();
-		if(step.getCustom().getCustomId() != customId)
-			throw new IllegalArgumentException();
+		//if(step.getCustom().getCustomId() != customId)
+		//	throw new IllegalArgumentException();
 		return step;
 	}
 	
@@ -176,7 +213,29 @@ public class CustomTrackerService
 			StepData stepData)
 	{
 		step.setStepId(stepData.getStepId());
-		// Add remaining fields
+		step.setStepNumber(stepData.getStepNumber());
+		step.setStepText(stepData.getStepText());
+		step.setCompleted(stepData.getCompleted());
+	}
+	
+	public List<StepData> getAllStepsForACustom(Integer customId)
+	{
+		List<Step> steps1 = stepDao.findAll();
+		List<StepData> steps2 = new LinkedList<>();
+		
+		for(Step step : steps1)
+		{
+			if(step.getCustom().getCustomId() == customId)
+			{
+				steps2.add(new StepData(step));
+			}
+		}
+		return steps2;
+	}
+	public void deleteStepById(Integer stepId) 
+	{
+		Step step = findStepById(stepId);
+		stepDao.delete(step);
 	}
 	
 	//--------------------customsupplies-----------------------------------
@@ -198,6 +257,7 @@ public class CustomTrackerService
 				getCustomId()));
 		customSupplies.setSupplies(findSuppliesById(customSuppliesData.
 				getSupplyId()));
+		customSupplies.setQuantityNeeded(customSuppliesData.getQuantityNeeded());
 		
 	}
 
@@ -223,15 +283,42 @@ public class CustomTrackerService
 		}
 		return customSupplies;
 	}
-	
+
 	private CustomSupplies findCustomSuppliesByIds(Integer customId,
 			Integer supplyId)
 	{
 		CustomSupplies customSupplies = customSuppliesDao.
 				findByCustomCustomIdAndSuppliesSupplyId(customId, supplyId);
-				//.orElseThrow(); //Not sure why this isn't working but whatever.
 		return customSupplies;
 	}
+	private CustomSupplies findCustomSuppliesById(Integer csId)
+	{
+		CustomSupplies customSupplies = customSuppliesDao.
+				findById(csId).orElseThrow(); 
+		return customSupplies;
+	}
+	
+	public List<CustomSuppliesData> getAllSuppliesForACustom(Integer customId)
+	{
+		List<CustomSupplies> cs1 = customSuppliesDao.findAll();
+		List<CustomSuppliesData> cs2 = new LinkedList<>();
+			
+		for(CustomSupplies cs : cs1)
+		{
+			if(cs.getCustom().getCustomId() == customId)
+			{
+				cs2.add(new CustomSuppliesData(cs));
+			}
+		}
+		return cs2;
+	}
+
+	public void deleteCustomSuppliesById(Integer csId) 
+	{
+		CustomSupplies cs = findCustomSuppliesById(csId);
+		customSuppliesDao.delete(cs);
+	}
+	
 
 
 	//------------------supplies----------------------
@@ -324,6 +411,33 @@ public class CustomTrackerService
 		charactr.setTraits(characterData.getTraits());
 		charactr.setPersonality(characterData.getPersonality());
 	}
+	
+	@Transactional(readOnly = true)
+	public List<CharacterData> retrieveAllCharacters() 
+	{
+		List<Characters> characters = charactersDao.findAll();
+		List<CharacterData> result = new LinkedList<>();
+		
+		for (Characters c : characters)
+		{
+			CharacterData cData = new CharacterData(c);
+			result.add(cData);
+		}
+		
+		return result;
+	}
+
+	@Transactional(readOnly = true)
+	public CharacterData retrieveCharacter(Integer cId) 
+	{
+		return new CharacterData(findCharacterById(cId));
+	}
+
+	public void deleteCharacterById(Integer cId) 
+	{
+		Characters c = findCharacterById(cId);
+		charactersDao.delete(c);
+	}
 
 	
 	//------------------dollbase-------------------------
@@ -374,4 +488,33 @@ public class CustomTrackerService
 		dollBase.setFeatures(dollBaseData.getFeatures());
 		dollBase.setQuantityOwned(dollBaseData.getQuantityOwned());
 	}
+	
+	@Transactional(readOnly = true)
+	public List<DollBaseData> retrieveAllDollBases() 
+	{
+		List<DollBase> dollBases = dollBaseDao.findAll();
+		List<DollBaseData> result = new LinkedList<>();
+		
+		for (DollBase dollBase : dollBases)
+		{
+			DollBaseData dollBaseData = new DollBaseData(dollBase);
+			result.add(dollBaseData);
+		}
+		
+		return result;
+	}
+
+	@Transactional(readOnly = true)
+	public DollBaseData retrieveDollBase(Integer dollBaseId) 
+	{
+		return new DollBaseData(findDollBaseById(dollBaseId));
+	}
+
+	public void deleteDollBaseById(Integer dollBaseId) 
+	{
+		DollBase dollBase = findDollBaseById(dollBaseId);
+		dollBaseDao.delete(dollBase);
+	}
+
+
 }

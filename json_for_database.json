@@ -4,6 +4,22 @@ custom
   "characterId": 1,
   "customName": "nevada"
 }
+{
+  "dollBaseId": 4,
+  "characterId": 3,
+  "customName": "rea doll"
+}
+{
+  "dollBaseId": 2,
+  "characterId": 4,
+  "customName": "threnody doll"
+}
+{
+  "dollBaseId": 3,
+  "characterId": 2,
+  "customName": "tamzen"
+}
+
 
 character
 {
@@ -15,7 +31,33 @@ character
 	"traits": "barnacles",
 	"personality": "cheerful and playful, capable of great violence but has moral code"
 }
-
+{2
+	"name": "Tamzen Bellringer",
+	"hairColor": "blonde",
+	"skinTone": "pale",
+	"eyeColor": "green",
+	"gender": "male (robot?)",
+	"traits": "mailman",
+	"personality": "determined and caring"
+}
+{3
+	"name": "Rea",
+	"hairColor": "dark red",
+	"skinTone": "brown",
+	"eyeColor": "dark red",
+	"gender": "butch",
+	"traits": "pretending to be human",
+	"personality": "strange but friendly"
+}
+{4
+	"name": "Threnody",
+	"hairColor": "blonde",
+	"skinTone": "light",
+	"eyeColor": "blue",
+	"gender": "trans female",
+	"traits": "tall",
+	"personality": "evil",
+}
 dollbase
 {
 	"dollName": "Gan Qing",
@@ -26,4 +68,240 @@ dollbase
 	"eyeType": "either",
 	"features": "",
 	"quantityOwned": 1
+}
+{
+	"dollName": "Rongrong (White Moth)",
+	"dollSet": "Kukaka Insect Cafe",
+	"brand": "Made in Heaven",
+	"size": "chunky",
+	"jointType": "BJD",
+	"eyeType": "inset",
+	"features": "tail and magnetic wings",
+	"quantityOwned": 1
+}
+{
+	"dollName": "Summer Wilderness",
+	"dollSet": "Liroro Summer Island",
+	"brand": "SIMONTOYS",
+	"size": "medium",
+	"jointType": "BJD",
+	"eyeType": "inset",
+	"features": "",
+	"quantityOwned": 2
+}
+{
+	"dollName": "Male Classmates Dark Body",
+	"dollSet": "PEETSOON",
+	"brand": "SIMONTOYS",
+	"size": "small",
+	"jointType": "BJD",
+	"eyeType": "painted-on",
+	"features": "blank doll body",
+	"quantityOwned": 1
+}
+
+custom/6/step
+{
+{
+	"stepNumber": 1,
+	"stepText": "paint base color on doll",
+	"completed": true
+}
+{
+	"stepNumber": 2,
+	"stepText": "paint details on doll skin",
+	"completed": false
+}
+{
+	"stepNumber": 1,
+	"stepText": "sew skirt",
+	"completed": true
+}
+{
+	"stepNumber": 2,
+	"stepText": "sew socks",
+	"completed": false
+}
+{
+	"stepNumber": 3,
+	"stepText": "sew top",
+	"completed": false
+}
+{
+	"stepNumber": 1,
+	"stepText": "make barrettes",
+	"completed": false
+}
+{
+	"stepNumber": 4,
+	"stepText": "assemble and dress doll",
+	"completed": true
+}
+}
+
+rea step
+{
+{
+	"stepNumber": 1,
+	"stepText": "dye doll body darker brown",
+	"completed": true
+}
+{
+	"stepNumber": 2,
+	"stepText": "make hair pieces out of clay",
+	"completed": true
+}
+{
+	"stepNumber": 3,
+	"stepText": "paint hair pieces",
+	"completed": true
+}
+{
+	"stepNumber": 0,
+	"stepText": "dye overalls black",
+	"completed": true
+}
+{
+	"stepNumber": 4,
+	"stepText": "paint eyes on",
+	"completed": true
+}
+{
+	"stepNumber": 5,
+	"stepText": "paint rest of face",
+	"completed": false
+}
+}
+threnody step
+{
+{
+	"stepNumber": 1,
+	"stepText": "Remove buns from back hair piece",
+	"completed": true
+}
+{
+	"stepNumber": 2,
+	"stepText": "Make new front hair piece out of clay",
+	"completed": false
+}
+{
+	"stepNumber": 3,
+	"stepText": "Paint and seal hair pieces",
+	"completed": false
+}
+{
+	"stepNumber": 0,
+	"stepText": "Remove and repaint eyebrows and mouth",
+	"completed": false
+}
+}
+
+
+supplies
+{
+rea
+{
+	"supplyName": "Crayola air dry clay",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "dark red paint",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "doll overalls",
+	"quantityOwned": 1,
+	"price": 12.99
+}
+nevy
+{
+	"supplyName": "dark blue gray paint",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "fluorescent orange paint",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "Liroro Summer Island Summer Night Dress",
+	"quantityOwned": 2
+}
+{
+	"supplyName": "dark blue ribbon",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "wire",
+	"quantityOwned": 3
+}
+{
+	"supplyName": "eye chips",
+	"quantityOwned": 8                                
+}
+threnody
+{
+	"supplyName": "DAS air dry clay",
+	"quantityOwned": 1
+}
+{
+	"supplyName": "light yellow paint",
+	"quantityOwned": 0
+}
+}
+
+cs
+{
+	"supplyId": 12,
+	"customId": 6,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 13,
+	"customId": 6,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 6,
+	"customId": 6,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 9,
+	"customId": 6,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 1,
+	"customId": 2,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 2,
+	"customId": 2,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 3,
+	"customId": 2,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 11,
+	"customId": 5,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 11,
+	"customId": 4,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 10,
+	"customId": 4,
+	"quantityNeeded": 1
+}
+{
+	"supplyId": 10,
+	"customId": 5,
+	"quantityNeeded": 1
 }

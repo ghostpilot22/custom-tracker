@@ -24,14 +24,14 @@ public class CustomSupplies
 	private Integer customSuppliesId;
 	
 	//@EmbeddedId
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "custom_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Custom custom;
 	
 	//@EmbeddedId
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "supply_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

@@ -22,7 +22,7 @@ public class Step
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer stepId;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "custom_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

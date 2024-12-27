@@ -37,7 +37,7 @@ public class Supplies
 	@ToString.Exclude
 	private Set<Custom> customs = new HashSet<>();*/
 	
-	@OneToMany(mappedBy = "supplies", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "supplies", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Set<CustomSupplies> customs = new HashSet<>();

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import custom.tracker.controller.model.CustomData;
 import custom.tracker.controller.model.CustomData.CustomSuppliesData;
 import custom.tracker.controller.model.CustomData.StepData;
+import custom.tracker.entity.Step;
 import custom.tracker.controller.model.SuppliesData;
 import custom.tracker.controller.model.CharacterData;
 import custom.tracker.controller.model.DollBaseData;
@@ -79,6 +80,18 @@ public class CustomTrackerController
 		return Map.of("message", "Deletion successful");
 	}
 	
+	@GetMapping("/custom/{customId}/prog")
+	public Float getProgressForACustom(@PathVariable Integer customId)
+	{
+		return customTrackerService.getProgressForACustom(customId);
+	}
+	
+	@GetMapping("/custom/{customId}/prep")
+	public Float getPrepForACustom(@PathVariable Integer customId)
+	{
+		return customTrackerService.getPrepForACustom(customId);
+	}
+	
 	// --------------- step -----------------
 	// Creates a step for a custom
 	@PostMapping("/custom/{customId}/step")
@@ -88,6 +101,22 @@ public class CustomTrackerController
 			@RequestBody StepData stepData)
 	{
 		return customTrackerService.saveStep(customId, stepData);
+	}
+	
+	@GetMapping("custom/{customId}/steps")
+	public List<StepData> getAllStepsForACustom(Integer customId)
+	{
+		return customTrackerService.getAllStepsForACustom(customId);
+	}
+
+	// Deletes a step by its id number.
+	@DeleteMapping("/step/{stepId}")
+	public Map<String, String> deleteStepById(
+			@PathVariable Integer stepId)
+	{
+		log.info("Deleting step {}", stepId);
+		customTrackerService.deleteStepById(stepId);
+		return Map.of("message", "Deletion successful");
 	}
 	
 	//--------------------customsupplies--------------
@@ -103,7 +132,16 @@ public class CustomTrackerController
 	{
 		return customTrackerService.saveCustomSupplies(customSuppliesData);
 	}
-	
+
+	// Deletes a customsupplies by its id number.
+	@DeleteMapping("/custom_supplies/{csId}")
+	public Map<String, String> deleteCustomSuppliesById(
+			@PathVariable Integer csId)
+	{
+		log.info("Deleting CustomSupplies {}", csId);
+		customTrackerService.deleteCustomSuppliesById(csId);
+		return Map.of("message", "Deletion successful");
+	}
 	
 	//----------------supplies--------------------
 
@@ -129,6 +167,22 @@ public class CustomTrackerController
 		return customTrackerService.saveCharacter(characterData);
 	}
 	
+	// Returns a list of all characters.
+	@GetMapping("/character")
+	public List<CharacterData> retrieveAllCharacters()
+	{
+		return customTrackerService.retrieveAllCharacters();
+	}
+	
+	// Returns a single character.
+	@GetMapping("/character/{characterId}")
+	public CharacterData retrieveCharacter(
+			@PathVariable Integer characterId)
+	{
+		return customTrackerService.retrieveCharacter(characterId);
+	}
+	
+	
 	//----------------dollBase--------------------
 	
 
@@ -140,6 +194,21 @@ public class CustomTrackerController
 	{
 		log.info("Creating doll base {}", dollBaseData);
 		return customTrackerService.saveDollBase(dollBaseData);
+	}
+	
+	// Returns a list of all bases.
+	@GetMapping("/doll_base")
+	public List<DollBaseData> retrieveAllDollBases()
+	{
+		return customTrackerService.retrieveAllDollBases();
+	}
+	
+	// Returns a single base.
+	@GetMapping("/doll_base/{dollBaseId}")
+	public DollBaseData retrieveDollBase(
+			@PathVariable Integer dollBaseId)
+	{
+		return customTrackerService.retrieveDollBase(dollBaseId);
 	}
 	
 }

@@ -174,15 +174,25 @@ public class CustomTrackerService
 			StepData stepData)
 	{
 		Custom custom = findCustomById(customId);
-		Step step = findOrCreateStep(customId, 
+		Step step = findOrCreateStep(
 				stepData.getStepId());
 		copyStepFields(step, stepData);
 		step.setCustom(custom);
 		custom.getSteps().add(step);
 		return new StepData(stepDao.save(step));
 	}
+
+	@Transactional(readOnly = false)
+	public StepData saveStep (
+			StepData stepData)
+	{
+		Step step = findOrCreateStep(
+				stepData.getStepId());
+		copyStepFields(step, stepData);
+		return new StepData(stepDao.save(step));
+	}
 	
-	private Step findOrCreateStep(Integer customId,
+	private Step findOrCreateStep(
 			Integer stepId) 
 	{
 		Step step;

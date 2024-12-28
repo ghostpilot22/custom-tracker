@@ -119,6 +119,17 @@ public class CustomTrackerController
 		return Map.of("message", "Deletion successful");
 	}
 	
+	// Updates an existing step
+	@PutMapping("/step/{id}")
+	public StepData updateStep(
+			@PathVariable Integer id, 
+			@RequestBody StepData stepData)
+	{
+		stepData.setStepId(id);
+		log.info("Updating step {}", stepData);
+		return customTrackerService.saveStep(stepData);
+	}
+	
 	//--------------------customsupplies--------------
 	// Need a post and put for supplies also. And a put for this one
 	// Creates a customsupplies. This is only linked one-way to the 
@@ -152,6 +163,17 @@ public class CustomTrackerController
 			@RequestBody SuppliesData suppliesData)
 	{
 		log.info("Creating supplies {}", suppliesData);
+		return customTrackerService.saveSupplies(suppliesData);
+	}
+	
+	// Updates an existing step
+	@PutMapping("/supplies/{id}")
+	public SuppliesData updateSupplies(
+			@PathVariable Integer id, 
+			@RequestBody SuppliesData suppliesData)
+	{
+		suppliesData.setSupplyId(id);
+		log.info("Updating supplies {}", suppliesData);
 		return customTrackerService.saveSupplies(suppliesData);
 	}
 	
